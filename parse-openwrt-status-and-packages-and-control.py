@@ -187,7 +187,11 @@ def parse_packages(text: str):
             data[line.split(":")[0]] = [content.strip()]
             data[line.split(":")[0]] = list(filter(None, data[line.split(":")[0]]))
 
-        elif (current_key in multiLineArrayOfStringKeys) == True and line[0] == " ":
+        elif (
+            (current_key in multiLineArrayOfStringKeys) == True
+            and len(line) >= 1
+            and line[0] == " "
+        ):
             if data[current_key] == None:
                 data[current_key] = []
             data[current_key].append(line.strip())
@@ -289,14 +293,18 @@ def parse_packages(text: str):
             data["Description"] = list(filter(None, data["Description"]))
             # assign the final description to the data dictionary.
             # This will be the same as the original text, but without the first paragraph and with newlines between paragraphs.
-        elif (current_key == "Conffiles") == True and line[0] == " ":
+        elif (current_key == "Conffiles") == True and len(line) >= 1 and line[0] == " ":
             if data["Conffiles"] == None:
                 data["Conffiles"] = []
             data["Conffiles"].append(line.strip())
             data["Conffiles"] = list(filter(None, data["Conffiles"]))
             pass
         else:
-            if (current_key == "Description") == True and line[0] == " ":
+            if (
+                (current_key == "Description") == True
+                and len(line) >= 1
+                and line[0] == " "
+            ):
                 if data["Description"] == None:
                     data["Description"] = []
                 data["Description"].append(line.strip())
