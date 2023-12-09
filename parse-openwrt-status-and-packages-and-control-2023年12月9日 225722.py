@@ -1,30 +1,47 @@
+# 导入json模块，用于处理JSON格式数据
 import json
+
+# 导入sys模块，获取用户输入信息
 import sys
+
+# 导入os模块，处理文件和路径名
 import os
 
 
+# 定义一个函数，从文件路径中提取基本名称（不带扩展名）
 def get_base_name(file_path):
     return os.path.splitext(os.path.basename(file_path))[0]
 
 
+# 主函数
 def main() -> None:
+    # 提示用户输入文本文件名
     print("请输入一个文本文件名：")
+
     # 读取用户输入的图片文件名，并去除首尾的空格和双引号
     input_file = sys.stdin.readline().strip().strip('"')
     print("你输入的一个文本文件名是：", input_file)
+
     filename = input_file
+
     # 读取文本文件
     with open(filename, "r", encoding="utf-8") as file:
         text = file.read()
+
     print("输入文本已读取", filename)
+
     packages = parse_packages(text)
+
     outputfile = get_base_name(filename) + ".json"
+
     # 将解析结果写入JSON文件
     with open(outputfile, "w") as file:
         json.dump(packages, file)
+
     print("解析结果已写入", outputfile)
 
 
+# 存储单行字符串键值
 oneLinesStringKeys = [
     "Source",
     "SourceName",
@@ -47,6 +64,7 @@ oneLinesStringKeys = [
 ]
 
 
+# 创建一个空的数据字典，包含所有可能的键和None作为默认值
 def create_empty_data():
     data = {
         "Package": None,
@@ -79,20 +97,24 @@ def create_empty_data():
     return data
 
 
+# 解析文本内容并生成JSON格式数据
 def parse_packages(text: str):
-    # 将文本解析为JSON格式
+    # 初始化一个空字典，用于存储解析后的数据
     packages = {}
     current_key = None
 
     # (current_key =="Description") = False
     # (current_key =="Conffiles") = False
     data = create_empty_data()
+
+    # 遍历文本中的每一行
     for line in text.split("\n"):
         if line.startswith("Package:"):
             current_key = "Package"
             # (current_key =="Conffiles") = False
             # (current_key =="Description") = False
             data = create_empty_data()
+
             package = line[len(line.split(":")[0]) + 1 :]
             data["Package"] = package.strip()
         elif line.startswith("Conflicts:"):
