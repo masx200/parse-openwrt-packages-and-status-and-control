@@ -1,6 +1,13 @@
 # 导入json模块，用于处理JSON格式数据
 import json
 
+"""
+    这个代码实现了一个简单的文本解析器，用于将一个包含特定格式的文本文件转换为JSON格式。程序首先从用户处获取输入的文本文件名，并读取该文件的内容。然后调用parse_packages()函数对文本内容进行解析，并将结果存储在一个字典中。最后，程序将这个字典转换为JSON格式，并将其写入到一个新的文件中。
+
+parse_packages()函数通过遍历文本中的每一行，根据每行的开头来判断其对应的键，并将值存储在数据字典中。同时，它还会检查是否已经存在相同的键，如果存在，则会合并这两个键对应的值。
+
+    
+    """
 # 导入sys模块，获取用户输入信息
 import sys
 
@@ -70,27 +77,27 @@ def create_empty_data():
         "Package": None,
         "Version": None,
         "ABIVersion": None,
-        "Depends": [],
+        "Depends": None,
         "License": None,
         "Section": None,
         "Architecture": None,
-        "Installed-Size": 0,
+        "Installed-Size": None,
         "Filename": None,
-        "Size": 0,
+        "Size": None,
         "SHA256sum": None,
         "Description": None,
-        "Provides": [],
-        "Conflicts": [],
+        "Provides": None,
+        "Conflicts": None,
         "CPE-ID": None,
         "Alternatives": None,
         "Essential": None,
         "Status": None,
-        "Installed-Time": 0,
+        "Installed-Time": None,
         "Auto-Installed": None,
         "Source": None,
         "Conffiles": None,
         "SourceName": None,
-        "SourceDateEpoch": 0,
+        "SourceDateEpoch": None,
     }
     for key in oneLinesStringKeys:
         data[key] = None
@@ -268,6 +275,7 @@ def parse_packages(text: str):
     return packages
 
 
+# 合并两个字典，只保留非None值
 def merge_dict_not_None(value, data):
     d2 = {}
     for dict1 in [data, value]:
