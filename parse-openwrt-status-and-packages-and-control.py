@@ -16,7 +16,7 @@ import os
 
 
 # 定义一个函数，从文件路径中提取基本名称（不带扩展名）
-def get_base_name(file_path:str):
+def get_base_name(file_path: str):
     return os.path.splitext(os.path.basename(file_path))[0]
 
 
@@ -43,13 +43,23 @@ def main() -> None:
 
     # 将解析结果写入JSON文件
     with open(outputfile, "w") as file:
-        json.dump(packages, file,indent=4)
+        json.dump(packages, file, indent=4)
 
     print("解析结果已写入", outputfile)
 
 
+multiLineArrayOfStringKeys = ["Tag", "Description", "Conffiles"]
+
 # 存储单行字符串键值
 oneLinesStringKeys = [
+    "Npp-Description",
+    "Npp-File",
+    "Npp-Mimetype",
+    "Npp-Name",
+    "Python-Version",
+    "Ruby-Versions",
+    "Description-md5",
+    "Build-Ids",
     "Source",
     "SourceName",
     "LicenseFiles",
@@ -68,6 +78,31 @@ oneLinesStringKeys = [
     "Status",
     "Auto-Installed",
     "Require-User",
+    "Priority",
+    "Origin",
+    "Original-Maintainer",
+    "Bugs",
+    "MD5sum",
+    "SHA1",
+    "SHA256",
+    "Homepage",
+    "Multi-Arch",
+    "Built-Using",
+    "Supported",
+    "Modaliases",
+]
+oneLineArrayOfStringKeys = [
+    "Task",
+    "Npp-Applications",
+    "Pre-Depends",
+    "Recommends",
+    "Replaces",
+    "Breaks",
+    "Suggests",
+    "Depends",
+    "Enhances",
+    "Conflicts",
+    "Provides",
 ]
 
 
@@ -99,8 +134,13 @@ def create_empty_data():
         "SourceName": None,
         "SourceDateEpoch": None,
     }
+    for key in oneLineArrayOfStringKeys:
+        data[key] = None
     for key in oneLinesStringKeys:
         data[key] = None
+    for key in multiLineArrayOfStringKeys:
+        data[key] = None
+
     return data
 
 
@@ -124,6 +164,34 @@ def parse_packages(text: str):
 
             package = line[len(line.split(":")[0]) + 1 :]
             data["Package"] = package.strip()
+        elif line.startswith("Version:"):
+            current_key = line.split(":")[0]
+            version = line[len(line.split(":")[0]) + 1 :]
+            data["Version"] = version.strip()
+        elif line.split(":")[0] in oneLineArrayOfStringKeys:
+            current_key = line.split(":")[0]
+            data[line.split(":")[0]] = [
+                s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
+            ]
+
+        elif line.split(":")[0] in oneLinesStringKeys:
+            current_key = line.split(":")[0]
+            data[line.split(":")[0]] = line[len(line.split(":")[0]) + 1 :].strip()
+
+        elif line.split(":")[0] in multiLineArrayOfStringKeys:
+            current_key = line.split(":")[0]
+            # (current_key =="Description") = True
+            # (current_key =="Conffiles") = False
+            content = line[len(line.split(":")[0]) + 1 :]
+
+            data[line.split(":")[0]] = [content.strip()]
+            data[line.split(":")[0]] = list(filter(None, data[line.split(":")[0]]))
+
+        elif (current_key in multiLineArrayOfStringKeys) == True and line[0] == " ":
+            if data[current_key] == None:
+                data[current_key] = []
+            data[current_key].append(line.strip())
+            data[current_key] = list(filter(None, data[current_key]))
         elif line.startswith("Conflicts:"):
             current_key = "Conflicts"
             Conflicts = [
@@ -152,14 +220,11 @@ def parse_packages(text: str):
             current_key = line.split(":")[0]
             ABIVersion = line[len(line.split(":")[0]) + 1 :]
             data["ABIVersion"] = ABIVersion.strip()
-        elif line.startswith("Version:"):
-            current_key = line.split(":")[0]
-            version = line[len(line.split(":")[0]) + 1 :]
-            data["Version"] = version.strip()
+
         elif line.startswith("Auto-Installed:"):
             current_key = line.split(":")[0]
             Auto_Installed = line[len(line.split(":")[0]) + 1 :]
-            data["Auto-Installed"] = "yes"==Auto_Installed.strip()
+            data["Auto-Installed"] = "yes" == Auto_Installed.strip()
         elif line.startswith("Depends:"):
             current_key = line.split(":")[0]
             depends = [
@@ -193,7 +258,7 @@ def parse_packages(text: str):
         elif line.startswith("Essential:"):
             current_key = line.split(":")[0]
             Essential = line[len(line.split(":")[0]) + 1 :]
-            data["Essential"] =  "yes"==Essential.strip()
+            data["Essential"] = "yes" == Essential.strip()
         elif line.startswith("Size:"):
             current_key = line.split(":")[0]
             size = int(line[len(line.split(":")[0]) + 1 :])
@@ -224,17 +289,17 @@ def parse_packages(text: str):
             data["Description"] = list(filter(None, data["Description"]))
             # assign the final description to the data dictionary.
             # This will be the same as the original text, but without the first paragraph and with newlines between paragraphs.
-        elif (current_key == "Conffiles") == True:
+        elif (current_key == "Conffiles") == True and line[0] == " ":
             if data["Conffiles"] == None:
                 data["Conffiles"] = []
-            data["Conffiles"] .append( line.strip())
+            data["Conffiles"].append(line.strip())
             data["Conffiles"] = list(filter(None, data["Conffiles"]))
             pass
         else:
-            if (current_key == "Description") == True:
+            if (current_key == "Description") == True and line[0] == " ":
                 if data["Description"] == None:
                     data["Description"] = []
-                data["Description"] .append( line.strip())
+                data["Description"].append(line.strip())
                 data["Description"] = list(filter(None, data["Description"]))
             else:
                 # print(line)
@@ -242,22 +307,19 @@ def parse_packages(text: str):
                     if line.split(":")[0] not in oneLinesStringKeys:
                         print(line)
                     # print(line.split(":"))
-                    current_key = line.split(":")[0]
-                    data[line.split(":")[0]] = line[
-                        len(line.split(":")[0]) + 1 :
-                    ].strip()
+
                     # print(data)
                 pass
 
-        #if "SHA256sum" in data and data["SHA256sum"] != None:
-            #key = data["SHA256sum"]
-            #if key not in packages:
-                #packages[key] = data
-            #else:
-                #value = packages[key]
-                #d2 = merge_dict_not_None(value, data)
-                #data = d2
-                #packages[key] = d2
+        # if "SHA256sum" in data and data["SHA256sum"] != None:
+        # key = data["SHA256sum"]
+        # if key not in packages:
+        # packages[key] = data
+        # else:
+        # value = packages[key]
+        # d2 = merge_dict_not_None(value, data)
+        # data = d2
+        # packages[key] = d2
         # print(data)
         if (
             data["Architecture"] != None
@@ -278,7 +340,7 @@ def parse_packages(text: str):
 
 
 # 合并两个字典，只保留非None值
-def merge_dict_not_None(value:dict, data:dict):
+def merge_dict_not_None(value: dict, data: dict):
     d2 = {}
     for dict1 in [data, value]:
         for k, v in dict1.items():
