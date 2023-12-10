@@ -1,3 +1,5 @@
+import re
+
 # 导入json模块，用于处理JSON格式数据
 import json
 
@@ -196,6 +198,10 @@ def parse_packages(text: str):
                 data[current_key] = []
             data[current_key].append(line.strip())
             data[current_key] = list(filter(None, data[current_key]))
+        elif ":" in line and re.match(r"^[A-Za-z0-9\-]+$", line.split(":")[0]):
+            current_key = line.split(":")[0]
+            data[line.split(":")[0]] = line[len(line.split(":")[0]) + 1 :].strip()
+
         elif line.startswith("Conflicts:"):
             current_key = "Conflicts"
             Conflicts = [
