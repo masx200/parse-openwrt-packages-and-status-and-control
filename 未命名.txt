@@ -7,71 +7,16 @@ Docs:       https://termux.dev/docs
 Donate:     https://termux.dev/donate
 Community:  https://termux.dev/community
 
-Working with packages:
 
- - Search:  pkg search <query>
- - Install: pkg install <package>
- - Upgrade: pkg upgrade
 
-Subscribing to additional repositories:
 
- - Root:    pkg install root-repo
- - X11:     pkg install x11-repo
 
-For fixing any repository issues,
-try 'termux-change-repo' command.
-
-Report issues at https://termux.dev/issues
-~ $ curl -I -v https://downloads.openwrt.org/releases/2
-2.03.5/packages/mipsel_24kc/base/Packages
-*   Trying [2a01:4f8:251:321::2]:443...
-*   Trying 168.119.138.211:443...
-* Connected to downloads.openwrt.org (2a01:4f8:251:321:
-:2) port 443
-* ALPN: curl offers h2,http/1.1
-* TLSv1.3 (OUT), TLS handshake, Client hello (1):
-*  CAfile: /data/data/com.termux/files/usr/etc/tls/cert
-.pem
-*  CApath: /data/data/com.termux/files/usr/etc/tls/cert
-s
-* TLSv1.3 (IN), TLS handshake, Server hello (2):
-* TLSv1.2 (IN), TLS handshake, Certificate (11):
-* TLSv1.2 (IN), TLS handshake, Server key exchange (12)
-:
-* TLSv1.2 (IN), TLS handshake, Server finished (14):
-* TLSv1.2 (OUT), TLS handshake, Client key exchange (16
-):
-* TLSv1.2 (OUT), TLS change cipher, Change cipher spec 
-(1):
-* TLSv1.2 (OUT), TLS handshake, Finished (20):
-* TLSv1.2 (IN), TLS handshake, Finished (20):
-* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-S
-HA256
-* ALPN: server accepted http/1.1
-* Server certificate:
-*  subject: CN=downloads.openwrt.org
-*  start date: Nov 17 22:29:27 2023 GMT
-*  expire date: Feb 15 22:29:26 2024 GMT
-*  subjectAltName: host "downloads.openwrt.org" matched
- cert's "downloads.openwrt.org"
-*  issuer: C=US; O=Let's Encrypt; CN=R3
-*  SSL certificate verify ok.
-* using HTTP/1.1
-> HEAD /releases/22.03.5/packages/mipsel_24kc/base/Pack
-ages HTTP/1.1
-> Host: downloads.openwrt.org
-> User-Agent: curl/8.4.0
-> Accept: */*
->
-< HTTP/1.1 200 OK
-HTTP/1.1 200 OK
-< Server: nginx/1.14.2
 Server: nginx/1.14.2
-< Date: Sun, 10 Dec 2023 01:35:41 GMT
+
 Date: Sun, 10 Dec 2023 01:35:41 GMT
-< Content-Type: text/plain
+
 Content-Type: text/plain
-< Content-Length: 264363
+
 Content-Length: 264363
 < Last-Modified: Sat, 09 Dec 2023 12:50:57 GMT
 Last-Modified: Sat, 09 Dec 2023 12:50:57 GMT
@@ -90,59 +35,6 @@ Access-Control-Allow-Headers: DNT, X-CustomHeader, Keep
 < Accept-Ranges: bytes
 Accept-Ranges: bytes
 
-<
-* Connection #0 to host downloads.openwrt.org left inta
-ct
-~ $ curl -I -v  https://dl.openwrt.ai/23.05/packages/mi
-psel_24kc/luci/Packages
-*   Trying 172.67.213.212:443...
-* Connected to dl.openwrt.ai (172.67.213.212) port 443
-* ALPN: curl offers h2,http/1.1
-* TLSv1.3 (OUT), TLS handshake, Client hello (1):
-*  CAfile: /data/data/com.termux/files/usr/etc/tls/cert
-.pem
-*  CApath: /data/data/com.termux/files/usr/etc/tls/cert
-s
-* TLSv1.3 (IN), TLS handshake, Server hello (2):
-* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8)
-:
-* TLSv1.3 (IN), TLS handshake, Certificate (11):
-* TLSv1.3 (IN), TLS handshake, CERT verify (15):
-* TLSv1.3 (IN), TLS handshake, Finished (20):
-* TLSv1.3 (OUT), TLS change cipher, Change cipher spec 
-(1):
-* TLSv1.3 (OUT), TLS handshake, Finished (20):
-* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384
-* ALPN: server accepted h2
-* Server certificate:
-*  subject: CN=dl.openwrt.ai
-*  start date: Nov  3 22:14:14 2023 GMT
-*  expire date: Feb  1 22:14:13 2024 GMT
-*  subjectAltName: host "dl.openwrt.ai" matched cert's 
-"dl.openwrt.ai"
-*  issuer: C=US; O=Let's Encrypt; CN=E1
-*  SSL certificate verify ok.
-* using HTTP/2
-* [HTTP/2] [1] OPENED stream for https://dl.openwrt.ai/
-23.05/packages/mipsel_24kc/luci/Packages
-* [HTTP/2] [1] [:method: HEAD]
-* [HTTP/2] [1] [:scheme: https]
-* [HTTP/2] [1] [:authority: dl.openwrt.ai]
-* [HTTP/2] [1] [:path: /23.05/packages/mipsel_24kc/luci
-/Packages]
-* [HTTP/2] [1] [user-agent: curl/8.4.0]
-* [HTTP/2] [1] [accept: */*]
-> HEAD /23.05/packages/mipsel_24kc/luci/Packages HTTP/2
-> Host: dl.openwrt.ai
-> User-Agent: curl/8.4.0
-> Accept: */*
->
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* old SSL session ID is stale, removing
-< HTTP/2 403
-HTTP/2 403
-< date: Sun, 10 Dec 2023 01:38:15 GMT
 date: Sun, 10 Dec 2023 01:38:15 GMT
 < content-type: text/html; charset=UTF-8
 content-type: text/html; charset=UTF-8
@@ -201,59 +93,6 @@ cf-ray: 8331c4706d763861-LHR
 < alt-svc: h3=":443"; ma=86400
 alt-svc: h3=":443"; ma=86400
 
-<
-* Connection #0 to host dl.openwrt.ai left intact
-~ $ curl -I -v  https://dl.openwrt.ai/23.05/packages/mi
-psel_24kc/luci/Packages.gz
-*   Trying 172.67.213.212:443...
-* Connected to dl.openwrt.ai (172.67.213.212) port 443
-* ALPN: curl offers h2,http/1.1
-* TLSv1.3 (OUT), TLS handshake, Client hello (1):
-*  CAfile: /data/data/com.termux/files/usr/etc/tls/cert
-.pem
-*  CApath: /data/data/com.termux/files/usr/etc/tls/cert
-s
-* TLSv1.3 (IN), TLS handshake, Server hello (2):
-* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8)
-:
-* TLSv1.3 (IN), TLS handshake, Certificate (11):
-* TLSv1.3 (IN), TLS handshake, CERT verify (15):
-* TLSv1.3 (IN), TLS handshake, Finished (20):
-* TLSv1.3 (OUT), TLS change cipher, Change cipher spec 
-(1):
-* TLSv1.3 (OUT), TLS handshake, Finished (20):
-* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384
-* ALPN: server accepted h2
-* Server certificate:
-*  subject: CN=dl.openwrt.ai
-*  start date: Nov  3 22:14:14 2023 GMT
-*  expire date: Feb  1 22:14:13 2024 GMT
-*  subjectAltName: host "dl.openwrt.ai" matched cert's 
-"dl.openwrt.ai"
-*  issuer: C=US; O=Let's Encrypt; CN=E1
-*  SSL certificate verify ok.
-* using HTTP/2
-* [HTTP/2] [1] OPENED stream for https://dl.openwrt.ai/
-23.05/packages/mipsel_24kc/luci/Packages.gz
-* [HTTP/2] [1] [:method: HEAD]
-* [HTTP/2] [1] [:scheme: https]
-* [HTTP/2] [1] [:authority: dl.openwrt.ai]
-* [HTTP/2] [1] [:path: /23.05/packages/mipsel_24kc/luci
-/Packages.gz]
-* [HTTP/2] [1] [user-agent: curl/8.4.0]
-* [HTTP/2] [1] [accept: */*]
-> HEAD /23.05/packages/mipsel_24kc/luci/Packages.gz HTT
-P/2
-> Host: dl.openwrt.ai
-> User-Agent: curl/8.4.0
-> Accept: */*
->
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* old SSL session ID is stale, removing
-< HTTP/2 200
-HTTP/2 200
-< date: Sun, 10 Dec 2023 01:38:38 GMT
 date: Sun, 10 Dec 2023 01:38:38 GMT
 < content-type: application/octet-stream
 content-type: application/octet-stream
@@ -287,9 +126,6 @@ e":604800}
 server: cloudflare
 < cf-ray: 8331c4fefe1860f9-LHR
 cf-ray: 8331c4fefe1860f9-LHR
-< alt-svc: h3=":443"; ma=86400
+
 alt-svc: h3=":443"; ma=86400
 
-<
-* Connection #0 to host dl.openwrt.ai left intact
-~ $
