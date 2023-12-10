@@ -198,10 +198,6 @@ def parse_packages(text: str):
                 data[current_key] = []
             data[current_key].append(line.strip())
             data[current_key] = list(filter(None, data[current_key]))
-        elif ":" in line and re.match(r"^[A-Za-z0-9\-]+$", line.split(":")[0]):
-            current_key = line.split(":")[0]
-            data[line.split(":")[0]] = line[len(line.split(":")[0]) + 1 :].strip()
-
         elif line.startswith("Conflicts:"):
             current_key = "Conflicts"
             Conflicts = [
@@ -305,25 +301,26 @@ def parse_packages(text: str):
             data["Conffiles"].append(line.strip())
             data["Conffiles"] = list(filter(None, data["Conffiles"]))
             pass
-        else:
-            if (
-                (current_key == "Description") == True
-                and len(line) >= 1
-                and line[0] == " "
-            ):
-                if data["Description"] == None:
-                    data["Description"] = []
-                data["Description"].append(line.strip())
-                data["Description"] = list(filter(None, data["Description"]))
-            else:
-                # print(line)
-                if ":" in line:
-                    if line.split(":")[0] not in oneLinesStringKeys:
-                        print(line)
-                    # print(line.split(":"))
+        elif ":" in line and re.match(r"^[A-Za-z0-9\-]+$", line.split(":")[0]):
+            current_key = line.split(":")[0]
+            data[line.split(":")[0]] = line[len(line.split(":")[0]) + 1 :].strip()
 
-                    # print(data)
-                pass
+        elif (
+            (current_key == "Description") == True and len(line) >= 1 and line[0] == " "
+        ):
+            if data["Description"] == None:
+                data["Description"] = []
+            data["Description"].append(line.strip())
+            data["Description"] = list(filter(None, data["Description"]))
+        else:
+            # print(line)
+            if ":" in line:
+                if line.split(":")[0] not in oneLinesStringKeys:
+                    print(line)
+                # print(line.split(":"))
+
+                # print(data)
+            pass
 
         # if "SHA256sum" in data and data["SHA256sum"] != None:
         # key = data["SHA256sum"]
