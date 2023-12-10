@@ -53,6 +53,17 @@ multiLineArrayOfStringKeys = ["Tag", "Description", "Conffiles"]
 
 # 存储单行字符串键值
 oneLinesStringKeys = [
+    "Task",
+    "Npp-Applications",
+    "Pre-Depends",
+    "Recommends",
+    "Replaces",
+    "Breaks",
+    "Suggests",
+    "Depends",
+    "Enhances",
+    "Conflicts",
+    "Provides",
     "Npp-Description",
     "Npp-File",
     "Npp-Mimetype",
@@ -92,19 +103,19 @@ oneLinesStringKeys = [
     "Supported",
     "Modaliases",
 ]
-oneLineArrayOfStringKeys = [
-    "Task",
-    "Npp-Applications",
-    "Pre-Depends",
-    "Recommends",
-    "Replaces",
-    "Breaks",
-    "Suggests",
-    "Depends",
-    "Enhances",
-    "Conflicts",
-    "Provides",
-]
+# oneLineArrayOfStringKeys = [
+#     "Task",
+#     "Npp-Applications",
+#     "Pre-Depends",
+#     "Recommends",
+#     "Replaces",
+#     "Breaks",
+#     "Suggests",
+#     "Depends",
+#     "Enhances",
+#     "Conflicts",
+#     "Provides",
+# ]
 oneLineIntegerKeys = [
     "content-length",
     "Content-Length",
@@ -143,8 +154,8 @@ def create_empty_data():
         "SourceName": None,
         "SourceDateEpoch": None,
     }
-    for key in oneLineArrayOfStringKeys:
-        data[key] = None
+    # for key in oneLineArrayOfStringKeys:
+    #     data[key] = None
     for key in oneLinesStringKeys:
         data[key] = None
     for key in multiLineArrayOfStringKeys:
@@ -179,15 +190,15 @@ def parse_packages(text: str):
             current_key = line.split(":")[0]
             version = line[len(line.split(":")[0]) + 1 :]
             data["Version"] = version.strip()
-        elif (
-            ":" in line
-            and len(line) >= 1
-            and line.split(":")[0] in oneLineArrayOfStringKeys
-        ):
-            current_key = line.split(":")[0]
-            data[line.split(":")[0]] = [
-                s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
-            ]
+        # elif (
+        #     ":" in line
+        #     and len(line) >= 1
+        #     and line.split(":")[0] in oneLineArrayOfStringKeys
+        # ):
+        #     current_key = line.split(":")[0]
+        #     data[line.split(":")[0]] = [
+        #         s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
+        #     ]
 
         elif (
             ":" in line and len(line) >= 1 and line.split(":")[0] in oneLinesStringKeys
@@ -217,18 +228,18 @@ def parse_packages(text: str):
                 data[current_key] = []
             data[current_key].append(line.strip())
             data[current_key] = list(filter(None, data[current_key]))
-        elif line.startswith("Conflicts:"):
-            current_key = "Conflicts"
-            Conflicts = [
-                s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
-            ]
-            data["Conflicts"] = Conflicts
-        elif line.startswith("Provides:"):
-            current_key = "Provides"
-            Provides = [
-                s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
-            ]
-            data["Provides"] = Provides
+        # elif line.startswith("Conflicts:"):
+        #     current_key = "Conflicts"
+        #     Conflicts = [
+        #         s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
+        #     ]
+        #     data["Conflicts"] = Conflicts
+        # elif line.startswith("Provides:"):
+        #     current_key = "Provides"
+        #     Provides = [
+        #         s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
+        #     ]
+        #     data["Provides"] = Provides
         elif line.startswith("CPE-ID:"):
             current_key = "CPE-ID"
             CPE_ID = line[len(line.split(":")[0]) + 1 :]
@@ -250,12 +261,12 @@ def parse_packages(text: str):
             current_key = line.split(":")[0]
             Auto_Installed = line[len(line.split(":")[0]) + 1 :]
             data["Auto-Installed"] = "yes" == Auto_Installed.strip()
-        elif line.startswith("Depends:"):
-            current_key = line.split(":")[0]
-            depends = [
-                s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
-            ]
-            data["Depends"] = depends
+        # elif line.startswith("Depends:"):
+        #     current_key = line.split(":")[0]
+        #     depends = [
+        #         s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
+        #     ]
+        #     data["Depends"] = depends
         elif line.startswith("License:"):
             current_key = line.split(":")[0]
             License = line[len(line.split(":")[0]) + 1 :]
