@@ -1,7 +1,6 @@
-import re
-
 # 导入json模块，用于处理JSON格式数据
 import json
+import re
 
 """
     这个代码实现了一个简单的文本解析器，用于将一个包含特定格式的文本文件转换为JSON格式。程序首先从用户处获取输入的文本文件名，并读取该文件的内容。然后调用parse_packages()函数对文本内容进行解析，并将结果存储在一个字典中。最后，程序将这个字典转换为JSON格式，并将其写入到一个新的文件中。
@@ -10,11 +9,11 @@ parse_packages()函数通过遍历文本中的每一行，根据每行的开头�
 
     
     """
-# 导入sys模块，获取用户输入信息
-import sys
-
 # 导入os模块，处理文件和路径名
 import os
+
+# 导入sys模块，获取用户输入信息
+import sys
 
 
 # 定义一个函数，从文件路径中提取基本名称（不带扩展名）
@@ -41,13 +40,13 @@ def main() -> None:
 
     packages = parse_packages(text)
 
-    outputfile = get_base_name(filename) + ".json"
+    outputFile = get_base_name(filename) + ".json"
 
     # 将解析结果写入JSON文件
-    with open(outputfile, "w") as file:
+    with open(outputFile, "w") as file:
         json.dump(packages, file, indent=4)
 
-    print("解析结果已写入", outputfile)
+    print("解析结果已写入", outputFile)
 
 
 multiLineArrayOfStringKeys = ["Tag", "Description", "Conffiles"]
@@ -106,6 +105,14 @@ oneLineArrayOfStringKeys = [
     "Conflicts",
     "Provides",
 ]
+oneLineIntegerKeys = [
+    "content-length",
+    "Content-Length",
+    "Installed-Size",
+    "Size",
+    "SourceDateEpoch",
+    "Installed-Time",
+]
 
 
 # 创建一个空的数据字典，包含所有可能的键和None作为默认值
@@ -142,6 +149,8 @@ def create_empty_data():
         data[key] = None
     for key in multiLineArrayOfStringKeys:
         data[key] = None
+    for key in oneLineIntegerKeys:
+        data[key] = None
 
     return data
 
@@ -170,17 +179,27 @@ def parse_packages(text: str):
             current_key = line.split(":")[0]
             version = line[len(line.split(":")[0]) + 1 :]
             data["Version"] = version.strip()
-        elif line.split(":")[0] in oneLineArrayOfStringKeys:
+        elif (
+            ":" in line
+            and len(line) >= 1
+            and line.split(":")[0] in oneLineArrayOfStringKeys
+        ):
             current_key = line.split(":")[0]
             data[line.split(":")[0]] = [
                 s.strip() for s in line[len(line.split(":")[0]) + 1 :].split(",")
             ]
 
-        elif line.split(":")[0] in oneLinesStringKeys:
+        elif (
+            ":" in line and len(line) >= 1 and line.split(":")[0] in oneLinesStringKeys
+        ):
             current_key = line.split(":")[0]
             data[line.split(":")[0]] = line[len(line.split(":")[0]) + 1 :].strip()
 
-        elif line.split(":")[0] in multiLineArrayOfStringKeys:
+        elif (
+            ":" in line
+            and len(line) >= 1
+            and line.split(":")[0] in multiLineArrayOfStringKeys
+        ):
             current_key = line.split(":")[0]
             # (current_key =="Description") = True
             # (current_key =="Conffiles") = False
@@ -269,6 +288,12 @@ def parse_packages(text: str):
             current_key = line.split(":")[0]
             size = int(line[len(line.split(":")[0]) + 1 :])
             data["Size"] = size
+        elif (
+            ":" in line and len(line) >= 1 and line.split(":")[0] in oneLineIntegerKeys
+        ):
+            current_key = line.split(":")[0]
+            size = int(line[len(line.split(":")[0]) + 1 :])
+            data[line.split(":")[0]] = size
         elif line.startswith("SourceDateEpoch:"):
             current_key = line.split(":")[0]
             SourceDateEpoch = int(line[len(line.split(":")[0]) + 1 :])
@@ -301,7 +326,11 @@ def parse_packages(text: str):
             data["Conffiles"].append(line.strip())
             data["Conffiles"] = list(filter(None, data["Conffiles"]))
             pass
-        elif ":" in line and re.match(r"^[A-Za-z0-9\-]+$", line.split(":")[0]):
+        elif (
+            ":" in line
+            and len(line) >= 1
+            and re.match(r"^[A-Za-z0-9\-]+$", line.split(":")[0])
+        ):
             current_key = line.split(":")[0]
             data[line.split(":")[0]] = line[len(line.split(":")[0]) + 1 :].strip()
 
@@ -314,12 +343,12 @@ def parse_packages(text: str):
             data["Description"] = list(filter(None, data["Description"]))
         else:
             # print(line)
-            if ":" in line:
-                if line.split(":")[0] not in oneLinesStringKeys:
-                    print(line)
-                # print(line.split(":"))
+            if ":" in line and len(line) >= 1:
+                # if line.split(":")[0] not in oneLinesStringKeys:
+                print(line)
+            # print(line.split(":"))
 
-                # print(data)
+            # print(data)
             pass
 
         # if "SHA256sum" in data and data["SHA256sum"] != None:
