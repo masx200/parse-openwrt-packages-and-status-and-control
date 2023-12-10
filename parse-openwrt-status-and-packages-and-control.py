@@ -352,14 +352,14 @@ def parse_packages(text: str):
                 data["Description"] = []
             data["Description"].append(line.strip())
             data["Description"] = list(filter(None, data["Description"]))
-        else:
-            # print(line)
-            if ":" in line and len(line) >= 1:
-                # if line.split(":")[0] not in oneLinesStringKeys:
-                print(line)
-            # print(line.split(":"))
+        elif ":" in line and len(line) >= 1:
+            # if line.split(":")[0] not in oneLinesStringKeys:
+            print(line)
+        # print(line.split(":"))
 
-            # print(data)
+        # print(data)
+        elif len(line.strip()) > 0:
+            print(line)
             pass
 
         # if "SHA256sum" in data and data["SHA256sum"] != None:

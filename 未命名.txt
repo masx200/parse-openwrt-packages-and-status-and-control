@@ -1,14 +1,14 @@
 Package: 3dldf-doc
 Architecture: all
 Version: 2.0.3+ndfsg-3
-Welcome to Termux!
+
 
 Docs:       https://termux.dev/docs
 Donate:     https://termux.dev/donate
 Community:  https://termux.dev/community
 
 
-
+Access-Control-Allow-Headers: DNT, X-CustomHeader, Keep
 
 
 Server: nginx/1.14.2
@@ -18,113 +18,92 @@ Date: Sun, 10 Dec 2023 01:35:41 GMT
 Content-Type: text/plain
 
 Content-Length: 264363
-< Last-Modified: Sat, 09 Dec 2023 12:50:57 GMT
+
 Last-Modified: Sat, 09 Dec 2023 12:50:57 GMT
-< Connection: keep-alive
+
 Connection: keep-alive
-< ETag: "657462b1-408ab"
+
 ETag: "657462b1-408ab"
-< Access-Control-Allow-Methods: GET, POST, OPTIONS
+
 Access-Control-Allow-Methods: GET, POST, OPTIONS
-< Access-Control-Allow-Headers: DNT, X-CustomHeader, Ke
-ep-Alive, User-Agent, X-Requested-With, If-Modified-Sin
-ce, Cache-Control, Content-Type, Content-Range, Range
-Access-Control-Allow-Headers: DNT, X-CustomHeader, Keep
--Alive, User-Agent, X-Requested-With, If-Modified-Since
-, Cache-Control, Content-Type, Content-Range, Range
-< Accept-Ranges: bytes
+
+
+
 Accept-Ranges: bytes
 
 date: Sun, 10 Dec 2023 01:38:15 GMT
-< content-type: text/html; charset=UTF-8
+
 content-type: text/html; charset=UTF-8
-< content-length: 5952
+
 content-length: 5952
-< cross-origin-embedder-policy: require-corp
+
 cross-origin-embedder-policy: require-corp
-< cross-origin-opener-policy: same-origin
+
 cross-origin-opener-policy: same-origin
-< cross-origin-resource-policy: same-origin
+
 cross-origin-resource-policy: same-origin
-< origin-agent-cluster: ?1
+
 origin-agent-cluster: ?1
-< permissions-policy: accelerometer=(),autoplay=(),brow
-sing-topics=(),camera=(),clipboard-read=(),clipboard-wr
-ite=(),geolocation=(),gyroscope=(),hid=(),interest-coho
-rt=(),magnetometer=(),microphone=(),payment=(),publicke
-y-credentials-get=(),screen-wake-lock=(),serial=(),sync
--xhr=(),usb=()
+
+
 permissions-policy: accelerometer=(),autoplay=(),browsi
-ng-topics=(),camera=(),clipboard-read=(),clipboard-writ
-e=(),geolocation=(),gyroscope=(),hid=(),interest-cohort
-=(),magnetometer=(),microphone=(),payment=(),publickey-
-credentials-get=(),screen-wake-lock=(),serial=(),sync-x
-hr=(),usb=()
-< referrer-policy: same-origin
+
+
 referrer-policy: same-origin
-< x-frame-options: SAMEORIGIN
+
 x-frame-options: SAMEORIGIN
-< cf-mitigated: challenge
+
 cf-mitigated: challenge
-< cache-control: private, max-age=0, no-store, no-cache
-, must-revalidate, post-check=0, pre-check=0
+
+
 cache-control: private, max-age=0, no-store, no-cache, 
-must-revalidate, post-check=0, pre-check=0
-< expires: Thu, 01 Jan 1970 00:00:01 GMT
+
+
 expires: Thu, 01 Jan 1970 00:00:01 GMT
-< report-to: {"endpoints":[{"url":"https:\/\/a.nel.clou
-dflare.com\/report\/v3?s=VVSoGuKdTbQZ0DLB1XyGoVOHwWmAJE
-svEXRSQqYP83MwaWKJ9PQ1f2e21GII3Aa7%2F696wxXi2XrU6fXUpIb
-tnk9eedy7XRPzbh0zEOFYo1ECxFOrtOJB%2BPfDJVnjHbup"}],"gro
-up":"cf-nel","max_age":604800}
+
+
 report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudf
-lare.com\/report\/v3?s=VVSoGuKdTbQZ0DLB1XyGoVOHwWmAJEsv
-EXRSQqYP83MwaWKJ9PQ1f2e21GII3Aa7%2F696wxXi2XrU6fXUpIbtn
-k9eedy7XRPzbh0zEOFYo1ECxFOrtOJB%2BPfDJVnjHbup"}],"group
-":"cf-nel","max_age":604800}
-< nel: {"success_fraction":0,"report_to":"cf-nel","max_
-age":604800}
+
+
+
+
 nel: {"success_fraction":0,"report_to":"cf-nel","max_ag
-e":604800}
-< server: cloudflare
+
+
 server: cloudflare
-< cf-ray: 8331c4706d763861-LHR
+
 cf-ray: 8331c4706d763861-LHR
-< alt-svc: h3=":443"; ma=86400
+
 alt-svc: h3=":443"; ma=86400
 
 date: Sun, 10 Dec 2023 01:38:38 GMT
-< content-type: application/octet-stream
+
 content-type: application/octet-stream
-< content-length: 183873
+
 content-length: 183873
-< last-modified: Fri, 17 Nov 2023 10:05:23 GMT
+
 last-modified: Fri, 17 Nov 2023 10:05:23 GMT
-< etag: "65573ae3-2ce41"
+
 etag: "65573ae3-2ce41"
-< strict-transport-security: max-age=31536000
+
 strict-transport-security: max-age=31536000
-< accept-ranges: bytes
+
 accept-ranges: bytes
-< cf-cache-status: DYNAMIC
+
 cf-cache-status: DYNAMIC
-< report-to: {"endpoints":[{"url":"https:\/\/a.nel.clou
-dflare.com\/report\/v3?s=LU0zWuTUBok87shUTk9ztpMz558hEc
-wvYF1NqebN5aMuImb6uaKw8BQDJPG%2FQ7q%2FSFduIzj6nybyfHO8Z
-64dYBNrIWzRu698BKxuE1j9VlGJii63fgtQvF7jgeBRx06A"}],"gro
-up":"cf-nel","max_age":604800}
+
+
+
 report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudf
-lare.com\/report\/v3?s=LU0zWuTUBok87shUTk9ztpMz558hEcwv
-YF1NqebN5aMuImb6uaKw8BQDJPG%2FQ7q%2FSFduIzj6nybyfHO8Z64
-dYBNrIWzRu698BKxuE1j9VlGJii63fgtQvF7jgeBRx06A"}],"group
-":"cf-nel","max_age":604800}
-< nel: {"success_fraction":0,"report_to":"cf-nel","max_
-age":604800}
+
+
+
+
 nel: {"success_fraction":0,"report_to":"cf-nel","max_ag
-e":604800}
-< server: cloudflare
+
+
 server: cloudflare
-< cf-ray: 8331c4fefe1860f9-LHR
+
 cf-ray: 8331c4fefe1860f9-LHR
 
 alt-svc: h3=":443"; ma=86400
